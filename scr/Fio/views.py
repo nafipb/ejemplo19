@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from Fio.models import Curso, Estudiante, Profesor, Entregable
+from Fio.forms import CursoFormulario
 
 # Create your views here.
 def inicio(request):
@@ -50,7 +51,8 @@ def entregables(request):
 
 def crear_curso(request):
     if request.method == "GET":
-        return render(request, "Fio/formulario.html")
+        formulario = CursoFormulario()
+        return render(request, "Fio/formulario.html",{"formulario":formulario})
     else:
         nombre= request.POST["nombre"]
         camada= request.POST["camada"]
