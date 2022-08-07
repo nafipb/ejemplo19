@@ -4,8 +4,11 @@
 {% block titulo %} Formulario {% endblock %}
 <!-- Bloque de Contenido-->    
 {% block contenido %}
-<form  method= "POST">{% csrf_token %}
-    {{formulario.as_table}}
-    <input type="submit" value= "Crear">
-</form>
+  
+<h1>Resultados</h1>
+    
+    {% for curso in cursos  %}
+        <p> {{curso.nombre}}</p>
+    {% endfor %}
+        
 {% endblock %}

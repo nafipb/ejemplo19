@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from Fio.models import Curso, Estudiante, Profesor, Entregable
-from Fio.forms import CursoFormulario
+from Fio.forms import CursoFormulario, EstudianteFormulario, ProfesorFormulario
 
 # Create your views here.
 def inicio(request):
@@ -54,14 +54,47 @@ def crear_curso(request):
         formulario = CursoFormulario()
         return render(request, "Fio/formulario.html",{"formulario":formulario})
     else:
-        nombre= request.POST["nombre"]
-        camada= request.POST["camada"]
-        curso= Curso(nombre=nombre, camada=camada)
-        curso.save()
-        return render(request, "Fio/index.html")
+        formulario = CursoFormulario(request.POST)
+
+        if formulario.is_valid():
+
+            data = formulario.cleaned_data
+            print(data)
+            nombre = data.get("nombre")
+            camada = data.get("camada")
+            curso= Curso(nombre=nombre, camada=camada)
+            curso.save()
+
+            return render(request, "Fio/index.html")
+        else:
+            return HttpResponse("Formulario no valido")
+
+def crear_profesor(request):
+    if request.method == "GET":
+        formulario = ProfesorFormulario()
+        return render(request, "Fio/formprofesores.html",{"formulario":formulario})
+    else:
+        formulario = ProfesorFormulario(request.POST)
+
+        if formulario.is_valid():
+
+            data = formulario.cleaned_data
+            print(data)
+            nombre = data.get("nombre")
+            apellido = data.get("apellido")
+            email = data.get("email")
+            profesion = data.get("profesion")
+            profesor= Profesor(nombre=nombre, apellido=apellido, email=email, profesion=profesion)
+            profesor.save()
+
+            return render(request, "Fio/index.html")
+        else:
+            return HttpResponse("Formulario no valido")
+
 def crear_estudiante(request):
         if request.method == "GET":
-            return render(request, "Fio/formestudiantes.html")
+            formulario = EstudianteFormulario()
+            return render(request, "Fio/formestudiantes.html",{"formulario":formulario})
         else:
             nombre= request.POST["nombre"]
             apellido= request.POST["apellido"]
@@ -82,3 +115,20 @@ def fake_login(request):
     
     else:
         return HttpResponse("No te conozco")
+
+def formulario_busqueda(request):
+    return render(request, "Fio/formulario_busqueda.html")
+
+def buscar(request):
+
+    curso_nombre = request.GET.get("curso", None)
+    camada = request.GET.get("camada", None)
+
+    if not curso_nombre:
+        return HttpResponse("No indicaste ningun nombre")
+
+    cursos_lista = Curso.objects.filter(nombre__icontains=curso_nombre)
+
+    if camada:
+        cursos_lista = cursos_lista.filter(camada=camada)
+    return render(request, "Fio/resultado_busqueda.html", {"cursos": cursos_lista})

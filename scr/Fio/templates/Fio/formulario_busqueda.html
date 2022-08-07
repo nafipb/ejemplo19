@@ -1,0 +1,19 @@
+<!-- Agregar la extención-->
+{% extends 'Fio/base.html' %}
+<!-- Bloque de Inicio-->
+{% block titulo %} Formulario {% endblock %}
+<!-- Bloque de Contenido-->    
+{% block contenido %}
+<form  action ="{% url 'buscar_curso' %}" method= "GET">
+    <p>
+        Indique un curso
+        <input type="text" name="curso">   
+    </p>
+    <p>
+        Indique la camada
+        <input type="number" name="camada">   
+    </p>
+    <input type="submit" value="buscar">
+</form>
+       
+{% endblock %}

@@ -6,9 +6,7 @@
 {% block contenido %}
 <h1> Docentes</h1>
 <p> Para la clase de Python tenemos: </p> 
-
     {% for profesor in profesores %}
         <p style="color: red">{{profesor.nombre}}</p>
     {% endfor %}
-
 {% endblock %}
