@@ -1,0 +1,21 @@
+<!-- Agregar la extención-->
+{% extends 'Fio/base.html' %}
+<!-- Bloque de Inicio-->
+{% block titulo %} Login faso {% endblock %}
+<!-- Bloque de Contenido-->    
+{% block contenido %}
+
+    <form method="post">{% csrf_token %}
+        <p>
+            Ingrese su usuario
+            <input type="text" name="username">   
+        </p>
+        <p>
+            Ingrese su contraseña
+            <input type="passowrd" name="password">   
+        </p>
+
+        <input type="submit" name="Ingresar">   
+        
+    </form>
+{% endblock %}

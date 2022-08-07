@@ -1,0 +1,14 @@
+<!-- Agregar la extención-->
+{% extends 'Fio/base.html' %}
+<!-- Bloque de Inicio-->
+{% block titulo %} Estudiantes {% endblock %}
+<!-- Bloque de Contenido-->    
+{% block contenido %}
+<h1> Pagina de nuestros estudiantes</h1>
+<p> Para la clase de Python tenemos: </p> 
+
+{% for estudiante in estudiantes %}
+<p style="color: red">{{estudiante.nombre}}</p>
+{% endfor %}
+
+{% endblock %}
